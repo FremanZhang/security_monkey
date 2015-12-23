@@ -144,4 +144,17 @@ class ItemTableComponent extends PaginatedTable implements DetachAware {
         }
         return url;
     }
+    
+    String getExportLink(){
+      String link = "/export/items?";
+      List<String> params = new List();
+      this.filter_params.forEach((String k, String v) => params.add(k+"="+v));
+      for(int i = 0; i < params.length; i++){
+        if(i != 0){
+          link += "&";
+        }
+        link += params[i];
+      }
+      return link;
+    }
 }
