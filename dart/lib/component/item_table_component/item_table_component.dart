@@ -129,7 +129,7 @@ class ItemTableComponent extends PaginatedTable implements DetachAware {
         return "disabled";
     }
 
-    void url_for_compare() {
+    String url_for_compare() {
         // #/compare?items=128,129,130
         var url = "#/compare?items=";
 
@@ -145,10 +145,21 @@ class ItemTableComponent extends PaginatedTable implements DetachAware {
         return url;
     }
     
+    void export(){
+      window.location.assign(getExportLink());
+    }
+    
     String getExportLink(){
       String link = "/export/items?";
       List<String> params = new List();
-      this.filter_params.forEach((String k, String v) => params.add(k+"="+v));
+      for(String key in this.filter_params.keys){
+        if (this.filter_params[key] == null){
+          params.add(key+"=");
+        }
+        else{
+          params.add(key+"="+this.filter_params[key]);
+        }
+      }
       for(int i = 0; i < params.length; i++){
         if(i != 0){
           link += "&";

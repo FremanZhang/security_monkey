@@ -58,7 +58,16 @@ def export_items():
     query = query.options(joinedload('technology'))
 
     query = query.order_by(ItemRevision.date_created.desc())
-    attributes = [["technology", "name"], ["account", "name"], ["account", "s3_name"], ["account", "number"], ["region"], ["name"], ["issues"], ["comments"]]
+    attributes = [
+        ["technology", "name"],
+        ["account", "name"],
+        ["account", "s3_name"],
+        ["account", "number"],
+        ["region"],
+        ["name"],
+        ["issues"],
+        ["comments"]
+    ]
 
     out = ",".join([at[0].capitalize() for at in attributes]) + "\n"
 

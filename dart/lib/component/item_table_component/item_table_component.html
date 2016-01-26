@@ -10,14 +10,14 @@
         <span class="glyphicon glyphicon-cog">
         </span><span class="caret"></span>&nbsp;
       </button>
-      <a class="btn btn-default btn-xs pull-right" ng-href="{{ getExportLink() }}">
-        <span class="glyphicon glyphicon-export pull-right"></span> Export
-      </a>
       <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
         <li class="{{ class_for_selection(2, 4) }}"><a href="{{url_for_compare()}}">Compare</a></li>
         <!--<li class="{{ class_for_selection(1, 9999) }}"><a>Ignore these items</a></li>-->
       </ul>
      </div>
+    <button ng-click="export()" type="button" class="btn btn-default btn-xs pull-right">
+      <span class="glyphicon glyphicon-export pull-right"></span> Export
+    </button>
     <button type="button" class="btn btn-default btn-xs pull-right" ng-click="list()">
       <span
         class="glyphicon glyphicon-refresh pull-right">
