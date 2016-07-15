@@ -449,6 +449,7 @@ Edit /usr/local/src/security_monkey/env-config/config-deploy.py:
     GOOGLE_AUTH_ENDPOINT = ''
     GOOGLE_SECRET = ''
 
+    from datetime import timedelta
     PERMANENT_SESSION_LIFETIME=timedelta(minutes=60)  # Will logout users after period of inactivity.
     SESSION_REFRESH_EACH_REQUEST=True
     SESSION_COOKIE_SECURE=True
