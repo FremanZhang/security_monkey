@@ -56,4 +56,17 @@ class CloudTrail {
     }
     return "panel-info";
   }
+
+  String summary() {
+    if (event_source != null && event_name != null) {
+      String tech = '';
+      if (event_source.contains('.')) {
+        tech = event_source.split('.')[0];
+      } else {
+        tech = event_source;
+      }
+      return "$tech:$event_name";
+    }
+    return '';
+  }
 }

@@ -31,8 +31,8 @@
       </div>
       <div ng-switch-when="cloudtrail" class="tab-pane active" id="cloudtrail">
           <div class="panel" ng-class="entry.class_for_panel()" ng-repeat="entry in rev.cloudtrail_entries">
-              <div ng-if="!entry.is_error()" class="panel-heading">CloudTrail Entry</div>
-              <div ng-if="entry.is_error()" class="panel-heading">CloudTrail Entry - {{  entry.error_code }}</div>
+              <div ng-if="!entry.is_error()" class="panel-heading">CloudTrail Entry - {{ entry.summary() }}</div>
+              <div ng-if="entry.is_error()" class="panel-heading">CloudTrail Entry - {{ entry.summary() }} - {{  entry.error_code }}</div>
               <div class="panel-body">
                   <table class="table">
                       <tr><td>Event Source:</td><td>{{ entry.event_source }}</td></tr>
