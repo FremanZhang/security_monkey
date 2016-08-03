@@ -215,7 +215,7 @@ class CloudTrailEntry(db.Model):
     """
     __tablename__ = 'cloudtrail'
     id = Column(Integer, primary_key=True)
-    event_id = Column(String(36), index=True)
+    event_id = Column(String(36), index=True, unique=True)
     request_id = Column(String(36), index=True)
     event_source = Column(String(64), nullable=False)
     event_name = Column(String(64), nullable=False)
@@ -223,10 +223,10 @@ class CloudTrailEntry(db.Model):
     request_parameters = deferred(Column(JSON))
     responseElements = deferred(Column(JSON))
     source_ip = Column(String(45))
-    user_agent = Column(String(150))
+    user_agent = Column(String(300))
     full_entry = deferred(Column(JSON))
     user_identity = deferred(Column(JSON))
-    user_identity_arn = Column(String(150), index=True)
+    user_identity_arn = Column(String(300), index=True)
     revision_id = Column(Integer, ForeignKey('itemrevision.id'), nullable=False, index=True)
     item_id = Column(Integer, ForeignKey('item.id'), nullable=False, index=True)
 

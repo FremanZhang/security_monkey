@@ -26,17 +26,17 @@ def upgrade():
         sa.Column('request_parameters', postgresql.JSON(), nullable=True),
         sa.Column('responseElements', postgresql.JSON(), nullable=True),
         sa.Column('source_ip', sa.String(length=45), nullable=True),
-        sa.Column('user_agent', sa.String(length=150), nullable=True),
+        sa.Column('user_agent', sa.String(length=300), nullable=True),
         sa.Column('full_entry', postgresql.JSON(), nullable=True),
         sa.Column('user_identity', postgresql.JSON(), nullable=True),
-        sa.Column('user_identity_arn', sa.String(length=150), nullable=True),
+        sa.Column('user_identity_arn', sa.String(length=300), nullable=True),
         sa.Column('revision_id', sa.Integer(), nullable=False),
         sa.Column('item_id', sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
         sa.ForeignKeyConstraint(['revision_id'], ['itemrevision.id'], ),
         sa.PrimaryKeyConstraint('id')
     )
-    op.create_index('ix_cloudtrail_event_id', 'cloudtrail', ['event_id'], unique=False)
+    op.create_index('ix_cloudtrail_event_id', 'cloudtrail', ['event_id'], unique=True)
     op.create_index('ix_cloudtrail_event_time', 'cloudtrail', ['event_time'], unique=False)
     op.create_index('ix_cloudtrail_item_id', 'cloudtrail', ['item_id'], unique=False)
     op.create_index('ix_cloudtrail_request_id', 'cloudtrail', ['request_id'], unique=False)
@@ -46,11 +46,8 @@ def upgrade():
     op.create_index('ix_auditorsettings_tech_id', 'auditorsettings', ['tech_id'], unique=False)
     op.create_index('ix_ignorelist_tech_id', 'ignorelist', ['tech_id'], unique=False)
     op.create_index('ix_item_account_id', 'item', ['account_id'], unique=False)
-    op.create_index('ix_item_latest_revision_complete_hash', 'item', ['latest_revision_complete_hash'], unique=False)
-    op.create_index('ix_item_latest_revision_durable_hash', 'item', ['latest_revision_durable_hash'], unique=False)
     op.create_index('ix_item_tech_id', 'item', ['tech_id'], unique=False)
-    op.drop_index('ix_item_complete_hash', table_name='item')
-    op.drop_index('ix_item_durable_hash', table_name='item')
+
     op.create_index('ix_itemaudit_auditor_setting_id', 'itemaudit', ['auditor_setting_id'], unique=False)
     op.create_index('ix_itemaudit_item_id', 'itemaudit', ['item_id'], unique=False)
     op.create_index('ix_itemaudit_justified_user_id', 'itemaudit', ['justified_user_id'], unique=False)
@@ -59,6 +56,7 @@ def upgrade():
     op.create_index('ix_itemrevision_item_id', 'itemrevision', ['item_id'], unique=False)
     op.create_index('ix_itemrevisioncomment_revision_id', 'itemrevisioncomment', ['revision_id'], unique=False)
     op.create_index('ix_itemrevisioncomment_user_id', 'itemrevisioncomment', ['user_id'], unique=False)
+
     ### end Alembic commands ###
 
 
@@ -72,11 +70,7 @@ def downgrade():
     op.drop_index('ix_itemaudit_justified_user_id', table_name='itemaudit')
     op.drop_index('ix_itemaudit_item_id', table_name='itemaudit')
     op.drop_index('ix_itemaudit_auditor_setting_id', table_name='itemaudit')
-    op.create_index('ix_item_durable_hash', 'item', ['latest_revision_durable_hash'], unique=False)
-    op.create_index('ix_item_complete_hash', 'item', ['latest_revision_complete_hash'], unique=False)
     op.drop_index('ix_item_tech_id', table_name='item')
-    op.drop_index('ix_item_latest_revision_durable_hash', table_name='item')
-    op.drop_index('ix_item_latest_revision_complete_hash', table_name='item')
     op.drop_index('ix_item_account_id', table_name='item')
     op.drop_index('ix_ignorelist_tech_id', table_name='ignorelist')
     op.drop_index('ix_auditorsettings_tech_id', table_name='auditorsettings')
