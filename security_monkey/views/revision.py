@@ -92,7 +92,7 @@ class RevisionGet(AuthenticatedService):
             ))
 
         cloudtrail_entries = []
-        for entry in result.cloudtrail_entries.all():
+        for entry in result.cloudtrail_entries:
             cloudtrail_entries.append(entry.full_entry)
 
         revision_marshaled = marshal(result, REVISION_FIELDS)
