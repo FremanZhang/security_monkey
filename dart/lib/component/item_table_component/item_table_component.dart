@@ -151,7 +151,7 @@ class ItemTableComponent extends PaginatedTable implements DetachAware {
     }
     
     String getExportLink(){
-      String link = "/export/items?";
+      String link = "/api/1/export/items?";
       List<String> params = new List();
       for(String key in this.filter_params.keys){
         if (this.filter_params[key] == null){

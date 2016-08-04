@@ -116,7 +116,7 @@ class IssueTableComponent extends PaginatedTable implements ScopeAware {
     }
     
     String getExportLink(){
-      String link = "/export/issues?";
+      String link = "/api/1/export/issues?";
       List<String> params = new List();
       for(String key in this.filter_params.keys){
         if (this.filter_params[key] == null){

@@ -90,9 +90,6 @@ rbac.exempt(forgot_password)
 rbac.exempt(change_password)
 rbac.exempt(healthcheck)
 
-from security_monkey.export import export_blueprint
-app.register_blueprint(export_blueprint)
-
 ### FLASK API ###
 from flask_restful import Api
 api = Api(app)
@@ -178,7 +175,8 @@ else:
 
 # Blueprints
 from security_monkey.sso.views import mod as sso_bp
-BLUEPRINTS = [sso_bp]
+from security_monkey.export import export_blueprint
+BLUEPRINTS = [sso_bp, export_blueprint]
 
 for bp in BLUEPRINTS:
     app.register_blueprint(bp, url_prefix="/api/1")
