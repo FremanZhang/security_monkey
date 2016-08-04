@@ -70,7 +70,7 @@ def export_items():
         ["comments"]
     ]
 
-    out = ",".join([at[0].capitalize() for at in attributes]) + "\n"
+    out = ",".join(["/".join(at) for at in attributes]) + "\n"
 
     for item in query:
         values = []
@@ -78,7 +78,10 @@ def export_items():
             val = item
             for at in attribute:
                 val = getattr(val, at)
-            values.append(str(val))
+                if val is None:
+                    break
+            val = str(val).replace('"', '""')
+            values.append('"{val}"'.format(val=val))
 
         out += ",".join(values) + "\n"
     return Response(out, mimetype='text/csv')
@@ -144,6 +147,9 @@ def export_issues():
         ["score"],
         ["issue"],
         ["notes"],
+        ["justified"],
+        ["user", "email"],
+        ["justification"]
     ]
 
     out = ",".join(["/".join(at) for at in attributes]) + "\n"
@@ -153,8 +159,10 @@ def export_issues():
         for attribute in attributes:
             val = issue
             for at in attribute:
-                val = str(getattr(val, at))
-                val = val.replace('"', '""')
+                val = getattr(val, at)
+                if val is None:
+                    break
+            val = str(val).replace('"', '""')
             values.append('"{val}"'.format(val=val))
 
         out += ",".join(values) + "\n"
