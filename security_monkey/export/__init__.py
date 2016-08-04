@@ -153,8 +153,9 @@ def export_issues():
         for attribute in attributes:
             val = issue
             for at in attribute:
-                val = getattr(val, at)
-            values.append('"'+str(val)+'"')
+                val = str(getattr(val, at))
+                val = val.replace('"', '""')
+            values.append('"{val}"'.format(val=val))
 
         out += ",".join(values) + "\n"
     return Response(out, mimetype='text/csv')
